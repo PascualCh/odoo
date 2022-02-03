@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- view type specification -->
+
+    <record id="patient_view_form" model="ir.ui.view">
+            <field name="name">hospital.patient.form</field>
+            <field name="model">hospital.patient</field>
+            <field name="arch" type="xml">
+                <form string="Patients">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="patient_name"></field>
+                            </group>
+                            <group>
+                                <field name="patient_state"></field>
+                            </group>
+                        </group>
+                        <group>
+                            <group >
+                                <field name="patient_id"></field>
+                            </group>    
+                            <group >
+                                <field name="patient_height"></field>
+                            </group>
+                        </group>
+                        <group> 
+                            <group >
+                                <field name="patient_grade"></field>
+                            </group>    
+                            <group >
+                                <field name="patient_photo"></field>
+                            </group>   
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <!-- Action patien menu-->
+    <record id="action_patient" model="ir.actions.act_window">
+            <field name="name">Patient</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.patient</field>
+            <field name="view_mode">form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new patient
+                </p>
+            </field>
+    </record>
+
+    <!-- Menu item declaration -->
+    <menuitem id="hospital_menu" name="Hospital Tab" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
+    <menuitem id="hospital_patient" name="patient" parent = "hospital_menu" action = "action_patient"/>
+</odoo>
