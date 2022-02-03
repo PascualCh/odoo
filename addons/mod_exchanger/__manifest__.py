@@ -13,7 +13,10 @@
     'website': 'odoomates.com',
     'depends': [],
     'demo': [],
-    'data': ["views/patient.xml"],
+    'data': [
+        "views/patient.xml",
+        "security/ir.model.access.csv",
+        ],
     'installable': True,
     'Application': True,
     'Auto_install': True,

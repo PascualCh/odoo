@@ -2,6 +2,21 @@
 <odoo>
     <!-- view type specification -->
 
+    <record id="patient_view_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.tree</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <tree string="Patients">
+                    <field name="patient_name"/>
+                    <field name="patient_state"/>
+                    <field name="patient_id"/>
+                    <field name="patient_height"/>
+                    <field name="patient_grade"/>
+                    <field name="patient_photo"/>
+            </tree>
+        </field>
+    </record>
+
     <record id="patient_view_form" model="ir.ui.view">
             <field name="name">hospital.patient.form</field>
             <field name="model">hospital.patient</field>
@@ -10,39 +25,35 @@
                     <sheet>
                         <group>
                             <group>
-                                <field name="patient_name"></field>
+                                <field name="patient_name"/>
                             </group>
                             <group>
-                                <field name="patient_state"></field>
+                                <field name="patient_state"/>
                             </group>
-                        </group>
-                        <group>
                             <group >
-                                <field name="patient_id"></field>
+                                <field name="patient_id"/>
                             </group>    
                             <group >
-                                <field name="patient_height"></field>
+                                <field name="patient_height"/>
                             </group>
-                        </group>
-                        <group> 
                             <group >
-                                <field name="patient_grade"></field>
+                                <field name="patient_grade"/>
                             </group>    
                             <group >
-                                <field name="patient_photo"></field>
+                                <field name="patient_photo"/>
                             </group>   
                         </group>
                     </sheet>
                 </form>
             </field>
-        </record>
+    </record>
 
     <!-- Action patien menu-->
     <record id="action_patient" model="ir.actions.act_window">
             <field name="name">Patient</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hospital.patient</field>
-            <field name="view_mode">form</field>
+            <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create a new patient

@@ -1,8 +1,3 @@
-from ast import Str
-from email.policy import default
-from pickle import FALSE
-import string
-from tokenize import String
 from odoo import models,fields
 
 
@@ -19,4 +14,4 @@ class HospitalPatient(models.Model):
     patient_height = fields.Float(default = 1.75, string = "Estatura", help = "Estatura del paciente", required = False)
     patient_id = fields.Char(default = "M12358", string = "Matricula del paciente", readonly = True)
     patient_grade = fields.Selection([('a','sin seguro'),('b','con seguro'),('c','Premium')], string = 'Tipo de paciente' , default = 'a')
-    patient_photo = fields.Binary( String = "Foto", )
+    patient_photo = fields.Binary(string = "Foto")
