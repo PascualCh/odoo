@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="True">
+        <record id="category_hospital" model="ir.module.category">
+            <field name="name">Hospital</field>
+        </record>
+    
+        <record id="group_hospital_patient_admin" model="res.groups">
+            <field name="name">Administracion del hospital</field>
+            <field name="comment">Administracion del hospital</field>
+            <field name="category_id" ref="category_hospital"/>
+        </record>
+    
+    </data>
+  
+</odoo>

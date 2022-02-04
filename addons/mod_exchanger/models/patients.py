@@ -14,4 +14,4 @@ class HospitalPatient(models.Model):
     patient_height = fields.Float(default = 1.75, string = "Estatura", help = "Estatura del paciente", required = False)
     patient_id = fields.Char(default = "M12358", string = "Matricula del paciente", readonly = True)
     patient_grade = fields.Selection([('a','sin seguro'),('b','con seguro'),('c','Premium')], string = 'Tipo de paciente' , default = 'a')
-    patient_photo = fields.Binary(string = "Foto")
+    patient_photo = fields.Binary(string = "Fotografia del paciente")

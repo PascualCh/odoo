@@ -3,10 +3,10 @@
     <!-- view type specification -->
 
     <record id="patient_view_tree" model="ir.ui.view">
-        <field name="name">hospital.patient.tree</field>
+        <field name="name">Hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <tree string="Patients">
+            <tree string="Base de datos">
                     <field name="patient_name"/>
                     <field name="patient_state"/>
                     <field name="patient_id"/>
@@ -21,27 +21,21 @@
             <field name="name">hospital.patient.form</field>
             <field name="model">hospital.patient</field>
             <field name="arch" type="xml">
-                <form string="Patients">
+                <form string="Nuevo paciente">
                     <sheet>
                         <group>
                             <group>
-                                <field name="patient_name"/>
+                                <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                                <group>
+                                    <field name="patient_name"/>
+                                    <field name="patient_id"/>
+                                    <field name="patient_grade"/>
+                                </group>
+                                <group>
+                                    <field name="patient_state"/>
+                                    <field name="patient_height"/>
+                                </group>
                             </group>
-                            <group>
-                                <field name="patient_state"/>
-                            </group>
-                            <group >
-                                <field name="patient_id"/>
-                            </group>    
-                            <group >
-                                <field name="patient_height"/>
-                            </group>
-                            <group >
-                                <field name="patient_grade"/>
-                            </group>    
-                            <group >
-                                <field name="patient_photo"/>
-                            </group>   
                         </group>
                     </sheet>
                 </form>
@@ -50,18 +44,18 @@
 
     <!-- Action patien menu-->
     <record id="action_patient" model="ir.actions.act_window">
-            <field name="name">Patient</field>
+            <field name="name">Base de datos</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hospital.patient</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create a new patient
+                    Crea un nuevo paciente.
                 </p>
             </field>
     </record>
 
     <!-- Menu item declaration -->
-    <menuitem id="hospital_menu" name="Hospital Tab" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
-    <menuitem id="hospital_patient" name="patient" parent = "hospital_menu" action = "action_patient"/>
+    <menuitem id="hospital_menu" name="Control de hospital" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
+    <menuitem id="hospital_patient" name="Paciente" parent = "hospital_menu" action = "action_patient"/>
 </odoo>
