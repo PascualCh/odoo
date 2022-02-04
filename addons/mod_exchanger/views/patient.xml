@@ -23,24 +23,63 @@
             <field name="arch" type="xml">
                 <form string="Nuevo paciente">
                     <sheet>
-                        <group>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="patient_name"/>
+
+                            </h1>
+                        </div>
+                        <group>    
+                            <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'patient_photo'}"/>
                             <group>
-                                <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
-                                <group>
-                                    <field name="patient_name"/>
-                                    <field name="patient_id"/>
-                                    <field name="patient_grade"/>
-                                </group>
-                                <group>
-                                    <field name="patient_state"/>
-                                    <field name="patient_height"/>
-                                </group>
+                                <field name="patient_name"/>
+                                <field name="patient_id"/>
+                                <field name="patient_grade"/>
+                            </group>
+                            <group>
+                                <field name="patient_gender" />
+                                <field name="patient_state"/>
+                                <field name="patient_height"/>
                             </group>
                         </group>
+
+                        <notebook>
+                            <page name="last_treatments" string="Ultimos trtamientos">
+
+                            </page>
+
+                            <page name="contact_info" string="Información de contacto">
+                                <group>
+                                    <field name="patient_phone"/>
+                                    <field name="patien_email"/>
+                                </group>
+                            </page>
+
+                            <page name="payment_info" string="Información de pago">
+                                <group>
+                                    <field name="patient_payment_mode"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
     </record>
+    <!-- Search view -->
+    <record id="patient_view_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string = "Search patients">
+                <field name = "patient_name" filter_domain = "['|',('patient_name','ilike', self), ('patient_id','ilike', self)]"/>
+                <field name="patient_name"/>
+                <field name="patient_id"/>
+                <filter name="filter_by_state" string="Estado" domain="[('patient_state', '=', 'True')]"/>
+                <filter name="filter_by_id" string="Matricula" domain = "[('patient_id', 'ilike', 'HP')]" />
+            </search>
+        </field>
+    </record>
+
 
     <!-- Action patien menu-->
     <record id="action_patient" model="ir.actions.act_window">

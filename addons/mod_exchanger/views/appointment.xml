@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- view type specification -->
+
+    <record id="appointment_view_tree" model="ir.ui.view">
+        <field name="name">Hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Base de datos">
+            </tree>
+        </field>
+    </record>
+
+    <record id="appointment_view_form" model="ir.ui.view">
+            <field name="name">hospital.appointment.form</field>
+            <field name="model">hospital.appointment</field>
+            <field name="arch" type="xml">
+                <form string="Nueva cita">
+                    <sheet>
+                    </sheet>
+                </form>
+            </field>
+    </record>
+
+    <!-- action appointment -->
+    <record id="action_appointment" model="ir.actions.act_window">
+            <field name="name">Base de datos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.patient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crea una nueva cita.
+                </p>
+            </field>
+    </record>
+
+    <!-- Menu item declaration -->
+    <menuitem id="hospital_menu" name="Control de hospital" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
+    <menuitem id="hospital_appointment" name="Citas" parent = "hospital_menu" action = "action_appointment"/>
+</odoo>
