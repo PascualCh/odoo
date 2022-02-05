@@ -15,6 +15,7 @@
     'demo': [],
     'data': [
         "views/patient.xml",
+        "views/appointment.xml",
         "security/security.xml",
         "data/sequence_data_patients.xml",
         "security/ir.model.access.csv"

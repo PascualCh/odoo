@@ -8,10 +8,14 @@
         <field name="arch" type="xml">
             <tree string="Base de datos">
                     <field name="patient_name"/>
+                    <field name="patient_last_name"/>
                     <field name="patient_state"/>
                     <field name="patient_id"/>
+                    <field name="patient_age"/>
+                    <field name="patient_gender"/>
                     <field name="patient_height"/>
                     <field name="patient_grade"/>
+                    <field name="patient_age_group"/>
                     <field name="patient_photo"/>
             </tree>
         </field>
@@ -22,24 +26,33 @@
             <field name="model">hospital.patient</field>
             <field name="arch" type="xml">
                 <form string="Nuevo paciente">
+                    <header>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="patient_name"/>
-
+                                <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'patient_photo'}"/>
+                                Paciente: 
+                                <field name="patien_full_name"/>
                             </h1>
+                            <h3>
+                                Matricula: 
+                                <field name="patient_id"/>
+                            </h3>
                         </div>
                         <group>    
-                            <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'patient_photo'}"/>
                             <group>
                                 <field name="patient_name"/>
+                                <field name="patient_last_name"/>
+                                <field name="patient_age"/>
                                 <field name="patient_id"/>
-                                <field name="patient_grade"/>
+                                <field name="patient_age_group"/>
                             </group>
                             <group>
                                 <field name="patient_gender" />
                                 <field name="patient_state"/>
                                 <field name="patient_height"/>
+                                <field name="patient_grade"/>
                             </group>
                         </group>
 
@@ -74,8 +87,12 @@
                 <field name = "patient_name" filter_domain = "['|',('patient_name','ilike', self), ('patient_id','ilike', self)]"/>
                 <field name="patient_name"/>
                 <field name="patient_id"/>
+                <separator/>
                 <filter name="filter_by_state" string="Estado" domain="[('patient_state', '=', 'True')]"/>
                 <filter name="filter_by_id" string="Matricula" domain = "[('patient_id', 'ilike', 'HP')]" />
+                <filter name="filter_by_gender_male" string="Hombre" domain = "[('patient_gender', '=', 'male')]" />
+                <filter name="filter_by_gender_female" string="Mujer" domain = "[('patient_gender', '=', 'female')]" />
+                <filter name="filter_by_gender_group" string="Genero" context = "{'group_by':'patient_gender'}" />
             </search>
         </field>
     </record>
@@ -97,4 +114,5 @@
     <!-- Menu item declaration -->
     <menuitem id="hospital_menu" name="Control de hospital" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
     <menuitem id="hospital_patient" name="Paciente" parent = "hospital_menu" action = "action_patient"/>
+    <menuitem id="hospital_appointment" name="Citas" parent = "hospital_menu" action = "action_appointment"/>
 </odoo>
