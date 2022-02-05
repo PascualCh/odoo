@@ -18,6 +18,7 @@
         "views/appointment.xml",
         "security/security.xml",
         "data/sequence_data_patients.xml",
+        "data/sequence_data_appointments.xml",
         "security/ir.model.access.csv"
         ],
     'installable': True,
