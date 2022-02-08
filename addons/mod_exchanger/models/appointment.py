@@ -1,4 +1,6 @@
 
+from email.policy import default
+from operator import index
 import string
 from tokenize import String
 import pytz
@@ -26,7 +28,23 @@ class HospitalAppointment(models.Model):
     patient_age = fields.Integer(string = "Edad", related='patient_id.patient_age')
     notes = fields.Text(string = "Notas importantes")
     appointment_date = fields.Date(String = "Fecha", required = True)
+    appointment_state = fields.Selection([
+        ('draft', 'Borrador'),
+        ('confirm', 'confirmado'),
+        ('done', 'Hecho'),
+        ('cancel', 'Cancelado'),
+    ], string="Estado", readonly=True,  default='draft')
 
+
+    def action_confirm(self):
+        for rec in self:
+            rec.appointment_state = 'confirm'
+    def action_done(self):
+        for rec in self:
+            rec.appointment_state = 'done'
+    def action_cancel(self):
+        for rec in self:
+            rec.appointment_state = 'cancel'
 
 
 

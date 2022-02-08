@@ -1,13 +1,14 @@
 import base64
+from email.policy import default
 
 from odoo import models, fields, modules, api, _
 from odoo.exceptions import ValidationError
 
-def get_default_img(name_image):
-    with open(modules.get_module_resource('mod_exchanger', 'static/description', name_image),
-              'rb') as f:
-        return base64.b64encode(f.read())
 
+def get_default_img(name_image):
+        with open(modules.get_module_resource('mod_exchanger', 'static/description', name_image),
+              'rb') as f:
+            return base64.b64encode(f.read())
 
 class HospitalPatient(models.Model):
     _name = 'hospital.patient'
@@ -31,9 +32,13 @@ class HospitalPatient(models.Model):
     patient_grade = fields.Selection([('a','sin seguro'),('b','con seguro'),('c','Premium')], string = 'Tipo de paciente' , default = 'a')
     patient_age = fields.Integer(default = "20", string = "Edad del paciente", help = "Escriba la edad del paciente")
     patient_photo = fields.Image(default = get_default_img('id_default.png'), string = "Fotografia del paciente")
-
-    # Ultimos trtamientos
-
+    patient_last_modify = fields.Datetime(default = fields.Datetime.now(), string = "Fecha de la ultima modificación")
+    patient_appointment_count = fields.Integer(string="citas", compute = 'get_appointment_count')
+    
+    # Ultimas citas
+    patient_appointment_data = fields.Many2one('hospital.appointment')
+    patient_id_appointment = fields.Char(string = "Id de cita", related='patient_appointment_data.name')
+    patient_date_appointment = fields.Date(string = "Fecha", related='patient_appointment_data.appointment_date')
 
     # Informacion de contacto
     patient_phone = fields.Char(default = "443-456-7895", string = "Numero telefonico", help = "Escriba el numero del paciente")
@@ -41,8 +46,40 @@ class HospitalPatient(models.Model):
 
     # informacion de pago
     patient_payment_mode = fields.Selection([('a','Efectivo'),('b','tarjeta de debito'),('c','Tarjeta de credito')], string = 'Metodo de pago' , default = 'a')
-    
 
+    def get_appointment_count(self):
+        count = self.env['hospital.appointment'].search_count([('patient_id','=', self.id)])
+        self.patient_appointment_count = count
+
+    
+    def open_patient_appointments(self):
+        return {
+            'name':_('Citas'),
+            'domain':[('patient_id','=', self.id)],
+            'view_type': 'form',
+            'res_model': 'hospital.appointment',
+            'view_mode': 'tree,form',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+        }
+
+    def create_appointment(self):
+        return {
+            'name':_('Crear cita'),
+            'domain':[],
+            'view_type': 'form',
+            'res_model': 'hospital.appointment',
+            'view_mode': 'form,tree',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+        }
+
+    @api.onchange('patient_state','patient_photo')
+    def onchange_modify(self):
+        today = fields.Date.today()
+        for rec in self:
+            if self.patient_last_modify != today:
+                self.patient_last_modify = fields.Datetime.now()
 
     @api.constrains('patient_age')
     def check_age(self):
@@ -75,3 +112,4 @@ class HospitalPatient(models.Model):
         result = super(HospitalPatient, self).create(vals)
         return result
 
+    

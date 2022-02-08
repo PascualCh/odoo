@@ -17,6 +17,7 @@
                     <field name="patient_grade"/>
                     <field name="patient_age_group"/>
                     <field name="patient_photo"/>
+                    <field name="patient_last_modify"/>
             </tree>
         </field>
     </record>
@@ -29,9 +30,18 @@
                     <header>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="open_patient_appointments" string="citas:" type="object" class="oe_stat_button" icon="fa-calendar">
+                                <field name="patient_appointment_count"/>
+                            </button>
+                            <button name="create_appointment" string="Crear cita" type="object" class="oe_stat_button" icon="fa-ticket">
+                            </button>
+                        </div>
+                        <div class="oe_title"><field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'patient_photo'}"/>
+                        </div>
+
                         <div class="oe_title">
                             <h1>
-                                <field name="patient_photo" widget="image" class="oe_avatar" options="{'preview_image': 'patient_photo'}"/>
                                 Paciente: 
                                 <field name="patien_full_name"/>
                             </h1>
@@ -40,6 +50,7 @@
                                 <field name="patient_id"/>
                             </h3>
                         </div>
+                        
                         <group>    
                             <group>
                                 <field name="patient_name"/>
@@ -53,12 +64,16 @@
                                 <field name="patient_state"/>
                                 <field name="patient_height"/>
                                 <field name="patient_grade"/>
+                                <field name="patient_last_modify"/>
                             </group>
                         </group>
 
                         <notebook>
-                            <page name="last_treatments" string="Ultimos trtamientos">
-
+                            <page name="last_appointments" string="Ultimas citas">
+                                <tree string="Base de datos">
+                                    <field name="patient_id_appointment"/>
+                                    <field name="patient_date_appointment"/>
+                                </tree>        
                             </page>
 
                             <page name="contact_info" string="Información de contacto">
@@ -110,9 +125,7 @@
                 </p>
             </field>
     </record>
-
     <!-- Menu item declaration -->
     <menuitem id="hospital_menu" name="Control de hospital" sequence = "0" web_icon="mod_exchanger,static/description/icon.png" />
     <menuitem id="hospital_patient" name="Paciente" parent = "hospital_menu" action = "action_patient"/>
-    <menuitem id="hospital_appointment" name="Citas" parent = "hospital_menu" action = "action_appointment"/>
 </odoo>
