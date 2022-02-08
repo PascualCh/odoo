@@ -36,9 +36,7 @@ class HospitalPatient(models.Model):
     patient_appointment_count = fields.Integer(string="citas", compute = 'get_appointment_count')
     
     # Ultimas citas
-    patient_appointment_data = fields.Many2one('hospital.appointment')
-    patient_id_appointment = fields.Char(string = "Id de cita", related='patient_appointment_data.name')
-    patient_date_appointment = fields.Date(string = "Fecha", related='patient_appointment_data.appointment_date')
+    patient_appointment_ids = fields.One2many("hospital.appointment",'patient_id',string="Citas")
 
     # Informacion de contacto
     patient_phone = fields.Char(default = "443-456-7895", string = "Numero telefonico", help = "Escriba el numero del paciente")
@@ -51,6 +49,12 @@ class HospitalPatient(models.Model):
         count = self.env['hospital.appointment'].search_count([('patient_id','=', self.id)])
         self.patient_appointment_count = count
 
+    def revisa_citas(self):
+        self.ensure_one()
+        dominio = [('patient_id','=', self.id)]
+        citas = self.env['citas'].search(dominio,limit=100,order="fecha_creacion desc")
+
+    #search, read, search_count, group_by, browse
     
     def open_patient_appointments(self):
         return {
@@ -72,6 +76,7 @@ class HospitalPatient(models.Model):
             'view_mode': 'form,tree',
             'view_id': False,
             'type': 'ir.actions.act_window',
+            'context': {'default_paciente_id':self.id}
         }
 
     @api.onchange('patient_state','patient_photo')

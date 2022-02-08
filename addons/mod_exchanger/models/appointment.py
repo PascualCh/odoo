@@ -27,7 +27,7 @@ class HospitalAppointment(models.Model):
     patient_id = fields.Many2one('hospital.patient', string = "Nombre del paciente", required = True)
     patient_age = fields.Integer(string = "Edad", related='patient_id.patient_age')
     notes = fields.Text(string = "Notas importantes")
-    appointment_date = fields.Date(String = "Fecha", required = True)
+    appointment_date = fields.Date(string = "Fecha", required = True)
     appointment_state = fields.Selection([
         ('draft', 'Borrador'),
         ('confirm', 'confirmado'),
@@ -37,11 +37,12 @@ class HospitalAppointment(models.Model):
 
 
     def action_confirm(self):
-        for rec in self:
-            rec.appointment_state = 'confirm'
+        self.write({'appointment_state':'confirm'})    
+            
     def action_done(self):
         for rec in self:
             rec.appointment_state = 'done'
+            
     def action_cancel(self):
         for rec in self:
             rec.appointment_state = 'cancel'

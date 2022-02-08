@@ -71,8 +71,7 @@
                         <notebook>
                             <page name="last_appointments" string="Ultimas citas">
                                 <tree string="Base de datos">
-                                    <field name="patient_id_appointment"/>
-                                    <field name="patient_date_appointment"/>
+                                    <field name="patient_appointment_ids"/>
                                 </tree>        
                             </page>
 
