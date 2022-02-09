@@ -99,7 +99,6 @@
         <field name="arch" type="xml">
             <search string = "Search patients">
                 <field name = "patient_name" filter_domain = "['|',('patient_name','ilike', self), ('patient_id','ilike', self)]"/>
-                <field name="patient_name"/>
                 <field name="patient_id"/>
                 <separator/>
                 <filter name="filter_by_state" string="Estado" domain="[('patient_state', '=', 'True')]"/>

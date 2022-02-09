@@ -72,7 +72,7 @@ class HospitalPatient(models.Model):
             'view_mode': 'form,tree',
             'view_id': False,
             'type': 'ir.actions.act_window',
-            'context': {'default_patient_id': self.patient_appointment_ids.id}
+            'context': {'default_patient_id': self.patient_appointment_ids.id, 'default_appointment_date': fields.Datetime.today()}
         }
 
     @api.onchange('patient_state','patient_photo')

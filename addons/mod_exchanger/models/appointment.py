@@ -1,4 +1,5 @@
 
+from ast import Str
 from email.policy import default
 from operator import index
 import string
@@ -24,9 +25,10 @@ class HospitalAppointment(models.Model):
 
     name = fields.Char(string = "Id de la cita", required = True, copy = False, readonly = True,
                             index = True, default = lambda self: _('New'))
-    patient_id = fields.Many2one('hospital.patient', string = "Nombre del paciente", required = True)
-    patient_full_name = fields.Char(string = "Nombre", related='patient_id.patien_full_name')
+    patient_id = fields.Many2one('hospital.patient', string = "Id del paciente", required = True)
+    patient_full_name = fields.Char(string = "Nombre del paciente", related='patient_id.patien_full_name')
     patient_age = fields.Integer(string = "Edad", related='patient_id.patient_age')
+    active = fields.Boolean(default = True, string = "Cita activa")
     notes = fields.Text(string = "Notas importantes")
     appointment_date = fields.Date(string = "Fecha", required = True)
     appointment_state = fields.Selection([
@@ -38,16 +40,17 @@ class HospitalAppointment(models.Model):
 
 
     def action_confirm(self):
-        self.write({'appointment_state':'confirm'})    
+        self.write({'appointment_state':'confirm'})
             
     def action_done(self):
         self.write({'appointment_state':'done'})
+        self.write({'active':'False'})
             
     def action_cancel(self):
         self.write({'appointment_state':'cancel'})
+
     def action_draft(self):
         self.write({'appointment_state':'draft'})
-
 
 
     
