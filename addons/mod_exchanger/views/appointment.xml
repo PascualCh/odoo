@@ -42,7 +42,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="patient_id"/>
+                                <field name="patient_id" context="{'patient_id_val': patient_id}" />
                                 <field name="patient_age"/>
                             </group>
                             <group>

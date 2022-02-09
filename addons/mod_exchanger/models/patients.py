@@ -13,7 +13,7 @@ def get_default_img(name_image):
 class HospitalPatient(models.Model):
     _name = 'hospital.patient'
     _description = 'Patient record'
-    _rec_name = 'patient_name'
+    _rec_name = 'patient_id'
 
     #agregar campos flotantes, enteros, tipo seleccion, boleanos
     #agregar en los parametros de creacion default,readonly,required, help
@@ -72,7 +72,7 @@ class HospitalPatient(models.Model):
             'view_mode': 'form,tree',
             'view_id': False,
             'type': 'ir.actions.act_window',
-            'context': {'patient_id':self.patient_name}
+            'context': {'default_patient_id': self.patient_appointment_ids.id}
         }
 
     @api.onchange('patient_state','patient_photo')
