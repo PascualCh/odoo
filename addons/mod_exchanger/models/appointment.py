@@ -21,7 +21,7 @@ class HospitalAppointment(models.Model):
         result = super(HospitalAppointment, self).create(vals)
         return result
     
-    
+
     name = fields.Char(string = "Id de la cita", required = True, copy = False, readonly = True,
                             index = True, default = lambda self: _('New'))
     patient_id = fields.Many2one('hospital.patient', string = "Nombre del paciente", required = True)
@@ -31,7 +31,7 @@ class HospitalAppointment(models.Model):
     appointment_state = fields.Selection([
         ('draft', 'Borrador'),
         ('confirm', 'confirmado'),
-        ('done', 'Hecho'),
+        ('done', 'Archivar'),
         ('cancel', 'Cancelado'),
     ], string="Estado", readonly=True,  default='draft')
 
@@ -40,12 +40,12 @@ class HospitalAppointment(models.Model):
         self.write({'appointment_state':'confirm'})    
             
     def action_done(self):
-        for rec in self:
-            rec.appointment_state = 'done'
+        self.write({'appointment_state':'done'})
             
     def action_cancel(self):
-        for rec in self:
-            rec.appointment_state = 'cancel'
+        self.write({'appointment_state':'cancel'})
+    def action_draft(self):
+        self.write({'appointment_state':'draft'})
 
 
 

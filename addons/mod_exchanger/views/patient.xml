@@ -112,7 +112,7 @@
     </record>
 
 
-    <!-- Action patien menu-->
+    <!-- Action patient menu-->
     <record id="action_patient" model="ir.actions.act_window">
             <field name="name">Base de datos</field>
             <field name="type">ir.actions.act_window</field>

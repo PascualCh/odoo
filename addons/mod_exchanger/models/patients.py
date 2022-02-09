@@ -41,7 +41,7 @@ class HospitalPatient(models.Model):
     # Informacion de contacto
     patient_phone = fields.Char(default = "443-456-7895", string = "Numero telefonico", help = "Escriba el numero del paciente")
     patien_email = fields.Char(default = "pascual.ch@tekniu.mx", string = "Correo del paciente", help = "Escriba el correo electronico del paciente")
-
+    
     # informacion de pago
     patient_payment_mode = fields.Selection([('a','Efectivo'),('b','tarjeta de debito'),('c','Tarjeta de credito')], string = 'Metodo de pago' , default = 'a')
 
@@ -49,10 +49,6 @@ class HospitalPatient(models.Model):
         count = self.env['hospital.appointment'].search_count([('patient_id','=', self.id)])
         self.patient_appointment_count = count
 
-    def revisa_citas(self):
-        self.ensure_one()
-        dominio = [('patient_id','=', self.id)]
-        citas = self.env['citas'].search(dominio,limit=100,order="fecha_creacion desc")
 
     #search, read, search_count, group_by, browse
     
@@ -76,7 +72,7 @@ class HospitalPatient(models.Model):
             'view_mode': 'form,tree',
             'view_id': False,
             'type': 'ir.actions.act_window',
-            'context': {'default_paciente_id':self.id}
+            'context': {'patient_id':self.patient_name}
         }
 
     @api.onchange('patient_state','patient_photo')
